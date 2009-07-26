@@ -19,18 +19,35 @@ namespace SilverlightApp
         public MainPage()
         {
             InitializeComponent();
-
             
-            IObservable<Event<RoutedEventArgs>> clicks = Observable.FromEvent<RoutedEventArgs>(button1, "Click");
+            //IObservable<Event<RoutedEventArgs>> clicks = Observable.FromEvent<RoutedEventArgs>(button1, "Click");
+            //int count = 0;
+            //clicks.Subscribe(() => count++);
+            //IObservable<string> messages = from c in clicks
+            //                               select string.Format("Clicked {0} time{1}", count, count > 1 ? "s" : "");
+            //messages.Subscribe(s => button1.Content = s);
+
+            //button1.GetClicks().Subscribe(new CountingButtonObserver{ Button = button1});
 
             int count = 0;
-            clicks.Subscribe(() => count++);
-
-            IObservable<string> messages = from c in clicks
-                                           select string.Format("Clicked {0} time{1}", count, count > 1 ? "s" : "");
-            messages.Subscribe(s => button1.Content = s);
-
+            button1.GetClicks().Select(x => ++count)
+                .Subscribe(() => button1.Content = string.Format("Clicked {0} time{1}", count, count > 1 ? "s" : ""));
         }
+
+        //public class CountingButtonObserver : IObserver<Event<RoutedEventArgs>>
+        //{
+        //    private int _count = 0;
+        //    public Button Button { get; set; }
+
+        //    public void OnNext(Event<RoutedEventArgs> value)
+        //    {
+        //        _count++;
+        //        Button.Content = string.Format("Clicked {0} time{1}", _count, _count > 1 ? "s" : "");
+        //    }
+
+        //    public void OnError(Exception exception) {}
+        //    public void OnCompleted() {}
+        //}
     }
 
     public static class Extensions
