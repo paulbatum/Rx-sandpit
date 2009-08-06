@@ -19,44 +19,24 @@ namespace SilverlightApp
         public MainPage()
         {
             InitializeComponent();
+
+            string formatString = "Option {0}, Option {1}, Option {2}";
+
+            //var selections = from s1 in choiceControl1.OptionSelections
+            //                 from s2 in choiceControl2.OptionSelections
+            //                 from s3 in choiceControl3.OptionSelections
+            //                 select new[] { s1, s2, s3 };
+
+            //var selections = Observable
+            //    .ForkJoin(choiceControl1.OptionSelections, choiceControl2.OptionSelections, choiceControl3.OptionSelections);
+
+            var selections = choiceControl1.OptionSelections
+                .CombineLatest(choiceControl2.OptionSelections, (i, j) => new[] { i, j })
+                .CombineLatest(choiceControl3.OptionSelections, (array, k) => new[] { array[0], array[1], k });
+
+            selections.Subscribe(values => statusText.Text = string.Format(formatString, values[0], values[1], values[2]));
             
-            //IObservable<Event<RoutedEventArgs>> clicks = Observable.FromEvent<RoutedEventArgs>(button1, "Click");
-            //int count = 0;
-            //clicks.Subscribe(() => count++);
-            //IObservable<string> messages = from c in clicks
-            //                               select string.Format("Clicked {0} time{1}", count, count > 1 ? "s" : "");
-            //messages.Subscribe(s => button1.Content = s);
 
-            //button1.GetClicks().Subscribe(new CountingButtonObserver{ Button = button1});
-
-            int count = 0;
-            button1.GetClicks().Select(x => ++count)
-                .Subscribe(() => button1.Content = string.Format("Clicked {0} time{1}", count, count > 1 ? "s" : ""));
-        }
-
-        //public class CountingButtonObserver : IObserver<Event<RoutedEventArgs>>
-        //{
-        //    private int _count = 0;
-        //    public Button Button { get; set; }
-
-        //    public void OnNext(Event<RoutedEventArgs> value)
-        //    {
-        //        _count++;
-        //        Button.Content = string.Format("Clicked {0} time{1}", _count, _count > 1 ? "s" : "");
-        //    }
-
-        //    public void OnError(Exception exception) {}
-        //    public void OnCompleted() {}
-        //}
-    }
-
-    public static class Extensions
-    {
-        public static IObservable<Event<RoutedEventArgs>> GetClicks(this Button button)
-        {
-            return Observable.FromEvent((EventHandler<RoutedEventArgs> genericHandler) => new RoutedEventHandler(genericHandler),
-                                        routedHandler => button.Click += routedHandler,
-                                        routedHandler => button.Click -= routedHandler);
         }
 
     }

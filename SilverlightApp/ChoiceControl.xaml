@@ -1,0 +1,13 @@
+﻿<UserControl x:Class="SilverlightApp.ChoiceControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+    >
+    <Grid x:Name="LayoutRoot">
+        <StackPanel Margin="20">
+            <TextBlock Text="{Binding Heading}" Margin="5" />
+            <RadioButton Name="optionButton1" Content="Option 1" />
+            <RadioButton Name="optionButton2" Content="Option 2" />
+            <RadioButton Name="optionButton3" Content="Option 3" />
+        </StackPanel>
+    </Grid>
+</UserControl>
