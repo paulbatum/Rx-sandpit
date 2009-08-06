@@ -3,12 +3,22 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:SilverlightApp="clr-namespace:SilverlightApp" 
     mc:Ignorable="d" d:DesignWidth="640" d:DesignHeight="480">
-    <StackPanel x:Name="LayoutRoot" Margin="50" Background="Azure" Width="400">
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
-            <SilverlightApp:ChoiceControl Name="choiceControl1" Heading="Choice 1"/>
-            <SilverlightApp:ChoiceControl Name="choiceControl2" Heading="Choice 2"/>
-            <SilverlightApp:ChoiceControl Name="choiceControl3" Heading="Choice 3"/>
+    <StackPanel x:Name="LayoutRoot" Background="Azure" Width="400">
+        <StackPanel Margin="20">
+            <TextBlock Text="Combining Example" HorizontalAlignment="Center" Margin="10" />
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Left">
+                <TextBlock Text="Select a means of combination:" />
+                <RadioButton Name="rbSelectMany" Content="Use SelectMany" />
+                <RadioButton Name="rbForkJoin" Content="Use ForkJoin" />
+                <RadioButton Name="rbCombineLatest" Content="Use CombineLatest" />                               
+                <TextBlock Text="Select an option from each group below, and then experiment with changing your selections." TextWrapping="Wrap" Margin="0,10,0,0"  />
+            </StackPanel>            
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
+                <SilverlightApp:ChoiceControl Name="choiceControl1" Heading="Group 1"/>
+                <SilverlightApp:ChoiceControl Name="choiceControl2" Heading="Group 2"/>
+                <SilverlightApp:ChoiceControl Name="choiceControl3" Heading="Group 3"/>
+            </StackPanel>
+            <TextBlock Name="statusText" Text="Status Text" TextAlignment="Center"></TextBlock>
         </StackPanel>
-        <TextBlock Name="statusText" TextAlignment="Center"></TextBlock>
     </StackPanel>
 </UserControl>
